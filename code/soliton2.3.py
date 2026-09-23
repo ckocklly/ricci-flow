@@ -97,4 +97,4 @@ for f0 in [-.1, -.5, -1., -2., -5., -10.]:
     t = np.linspace(0, t_end, 5000)
     y = sol.sol(np.maximum(t, eps))
     print(f"(f0 = {f0}) Final b': ", sol.y[3, -1])
-    # graph(t, y)
+    graph(t, y)
