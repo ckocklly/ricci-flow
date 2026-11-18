@@ -1,0 +1,215 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage{rf}
+
+\addbibresource{references.bib}
+
+\begin{document}
+
+\begin{center}
+    {\LARGE Symmetric Fixed Points of the Ricci Flow} \\[6pt]
+    {\large \textbf{GPT Proof Write-Up}}
+    \[
+    \begin{array}{ll}
+    \text{Author:}  &\text{Leo Lee} \\
+    \text{Date:} &\text{\today} \\
+    \end{array}
+    \]
+\end{center}
+
+\vspace{-6pt}
+
+\section{Introduction}
+To find $(\SO(3) \times \SO(2))$-invariant Ricci solitons given by $(M, g)$ and a function $f: (\R^2 \times S^2) \to \R$, we will study the following ODE system \cite[Eqs.~(2.1)--(2.3)]{Rajan}
+\begin{align}
+    f'' &= \frac{a''}{a} + 2 \frac{b''}{b} - 1, \label{eq:rajan21} \\
+    a'' &= -2 \frac{a'b'}{b} + a'f' + a, \label{eq:rajan22} \\
+    b'' &= \frac{1 - (b')^2}{b} - \frac{a'b'}{a} + b'f' + b. \label{eq:rajan23}
+\end{align}
+for functions $a,b,f: [0, \infty) \to \R$ subject to initial conditions \cite[Lem.~2.1]{Rajan}
+\[
+    a(0) = 0,\ \ a'(0) = 1,\ \ b(0) = b_0 > 0,\ \ b'(0) = 0,\ \ f(0) = f'(0) = 0
+\]
+and $f''(0) = f_0 < 0$ to make use of Lem.~4.2 \cite{Rajan}. By Thm.~5.1, there exists unique solutions $a,b,f$. Let
+\begin{align*}
+    \alpha &\coloneq \lim_{r \to \infty} a'(r), \\
+    \beta &\coloneq \lim_{r \to \infty} b'(r).
+\end{align*}
+Lems.~6.12--6.13 imply that the limits converge and $\alpha, \beta > 0$. We are interested in bounding $\beta$ as it determines the scalar curvature of the Ricci flow.
+
+\section{Main Proofs}
+
+\begin{theorem} \label{thm:main-ricci}
+    Let $\lambda \coloneq \sqrt{-2f_0}$ and $c \coloneq 1 + b_0^{-2}$. If $\lambda^2 \ge 8c$, then
+    \begin{equation}
+        0 < \beta^2 \le \frac{b_0^2 + 1}{\lambda^2 - 4c}.
+    \end{equation}
+\end{theorem}
+
+The above theorem implies that for some $C > \sqrt{b_0^2 + 1}$, we have
+\[
+    \beta^2 \le \frac{b_0^2 + 1}{\lambda^2 - 4c} < \frac{C^2}{\lambda^2} \implies \beta < C / \lambda,
+\]
+which further implies that once $f_0$ is sufficiently negative, the corresponding asymptotic cones have strictly positive scalar curvature away from their vertices.
+
+\newpar
+
+The following lemma is critical for proving Thm.~\ref{thm:main-ricci}.
+
+\begin{lemma} \label{lem:monotone-q}
+    Let $\lambda$ and $c$ be defined as in Thm.~\ref{thm:main-ricci}. If $\lambda^2 \ge 8c$, then \[ Q(r) \coloneq \frac{1 + [b(r)]^2}{\lambda^2 - 2f(r) - 4c} \] is strictly decreasing on $(0, \infty)$.
+\end{lemma}
+
+\begin{proof}
+    Let 
+    \begin{equation}
+        H \coloneq \frac{a'}{a} + 2\frac{b'}{b} - f'.
+    \end{equation}
+    By Lems.~4.1--4.2 \cite{Rajan}, we have $a', b' > 0$ and $f', f'' < 0$ on $(0, \infty)$. Therefore, $b(r) \ge b_0$ and $f(r) \le 0$. By Eq.~\eqref{eq:rajan23}, we have
+    \begin{align}
+        b'' + Hb' &= \frac{1 - (b')^2}{b} - \frac{a'b'}{a} + b'f' + b + \left( \frac{a'}{a} + 2\frac{b'}{b} - f' \right) b' \notag \\ &= \frac{1 + (b')^2}{b} + b. \label{eq:gpt1}
+    \end{align}
+    On the other hand, Lem.~3.1 \cite{Rajan} gives
+    \begin{equation} \label{eq:raj-lem31}
+        \Delta f - \abs{\nabla f}^2 - 2f = 2f_0 = -\lambda^2.
+    \end{equation}
+    Since the Riemannian volume density of Ricci flows is proportional to $ab^2$, we have
+    \begin{equation}
+        \Delta f = \frac{1}{ab^2} \frac{\partial}{\partial r} (ab^2 f') = f'' + \left( \frac{a'}{a} + 2\frac{b'}{b} \right) f'.
+    \end{equation}
+    Substitute $\Delta f$ and $|\nabla f|^2 = (f')^2$. Then we can rewrite Eq.~\eqref{eq:raj-lem31} as follows:
+    \begin{gather}
+        f'' + \left( \frac{a'}{a} + 2\frac{b'}{b} \right) f' - (f')^2 - 2f = -\lambda^2 \\
+        \implies f'' + Hf' = -\lambda^2 + 2f. \label{eq:gpt2}
+    \end{gather}
+    Since $H \ge -f' > 0$ and $f'' < 0$, by Eq.~\eqref{eq:gpt2}, we can obtain
+    \begin{equation} \label{eq:aqw1}
+        0 < (f')^2 = (-f')^2 \le -Hf' = f'' + \lambda^2 - 2f < \lambda^2 - 2f.
+    \end{equation}
+    Let
+    \begin{align}
+        P &\coloneq \lambda^2 - 2f - 4c, \label{eq:qp} \\
+        Y &\coloneq 1 + b^2, \label{eq:qy}
+    \end{align}
+    where $Q = Y/P$. Our assumption $\lambda^2 \ge 8c$ gives the following relations:
+    \begin{equation} \label{eq:aqw2}
+        P = \lambda^2 - 2f - 4c \ge 4c - 2f \ge 4c = 4 (1 + b_0^{-2}) > 0.
+    \end{equation}
+    Therefore, from Eqs.~\eqref{eq:aqw1} and \eqref{eq:aqw2}, we can obtain the following
+    \begin{equation} \label{eq:vbound}
+        \frac{(f')^2}P < \frac{\lambda^2 - 2f}{\lambda^2 - 2f - 4c} = 1 + \frac{4c}{\lambda^2 - 2f - 4c} \le 2.
+    \end{equation}
+    
+    \newpar
+
+    To show that $Q$ never stops decreasing, we attempt to compute $Q''$ at the critical point of $Q$. Compute derivatives of $Y$ and $P$ given in Eqs.~\eqref{eq:qp} and \eqref{eq:qy}. We have
+    \begin{equation} \label{eq:pypy}
+        P' = -2f',\ \ Y' = 2bb',\ \ P'' = -2f'',\ \ Y'' = 2[bb'' + (b')^2].
+    \end{equation}
+    Then
+    \begin{align}
+        Y'' + HY' = 2(b')^2 + 2b(b'' + Hb') &= 2(b')^2 + 2b \left( \frac{1 + (b')^2}{b} + b \right) \notag \\
+        &= 2b^2 + 2 + 4(b')^2 \notag \\
+        &= 2Y + 4(b')^2 \label{eq:lala7}
+    \end{align}
+    and
+    \begin{equation}
+        P'' + HP' = -2(f'' + Hf') = -2(-\lambda^2 + 2f) = 2(P + 4c)
+    \end{equation}
+    Recall that $Y = QP$. When $Q' = 0$, we have
+    \begin{gather}
+        Y' = (QP)' = QP' \label{eq:lala5} \\
+        Y'' = (QP' + Q'P)' = QP'' + Q''P. \label{eq:lala6}
+    \end{gather}
+    In Eq.~\eqref{eq:lala5}, let us replace $Y'$ and $P'$ by the expression given in Eq.~\eqref{eq:pypy}:
+    \begin{equation}
+        bb' = -Qf'. \label{eq:bbqf}
+    \end{equation}
+    From Eq.~\eqref{eq:lala6}, we can obtain
+    \begin{equation} \label{eq:lala8}
+        Y'' + HY' = QP'' + Q''P + HQP' = Q''P + Q(P'' + HP').
+    \end{equation}
+    Combining results in Eqs.~\eqref{eq:lala7} and \eqref{eq:lala8}, we have
+    \begin{equation}
+        PQ'' = 2Y + 4(b')^2 - Q \cdot 2(P + 4c) = 4(b')^2 - 8Qc \label{eq:b886}
+    \end{equation}
+    From Eq.~\eqref{eq:bbqf}, we can obtain
+    \begin{equation}
+        (b')^2 = \frac{Q^2(f')^2}{b^2} = \frac{QY}{P} \frac{(f')^2}{b^2} = \frac QP \cdot (f')^2 \cdot \frac{b^2 + 1}{b^2}
+        = \frac{Q(f')^2 (1 + b^{-2})}{P}. \label{eq:b887}
+    \end{equation}
+    Finally, by Eqs.~\eqref{eq:b886}--\eqref{eq:b887}, we have
+    \begin{equation}
+        Q'' = \frac{4(b')^2 - 8Qc}{P} = \frac{4Q}P \left( \frac{(f')^2 (1 + b^{-2})}{P} - 2c \right).
+    \end{equation}
+    Eq.~\eqref{eq:vbound} gives $0 < (f')^2/P < 2$ and $b \ge b_0$ implies $1 + b^{-2} \le 1 + b_0^{-2} = c$. Therefore,
+    \begin{equation}
+        \frac{(f')^2}{P} (1 + b^{-2}) < 2c,
+    \end{equation}
+    which implies $Q'' < 0$. This implies that $Q'$ can never rise above $0$.
+
+    \newpar
+
+    Now, we will show that the initial value $Q'$ is negative. Consider the initial conditions and the oddness of $a$ and the evenness of $b$ and $f$, we can write
+    \[
+        a(r) = r + \mathcal O(r^3),\ \ b(r) = b_0 + \tfrac12 b''(0) r^2 + \mathcal O(r^4),\ \ f(r) = \tfrac12 f_0 r^2 + \mathcal O(r^4).
+    \]
+    Then
+    \begin{align}
+        H &= \frac{a'}{a} + 2\frac{b'}{b} - f' \\
+        &= \frac{1 + \mathcal O(r^2)}{r + \mathcal O(r^3)} + 2 \frac{b''(0)r + \mathcal O(r^3)}{b_0 + \mathcal O(r^2)} + \mathcal O(r) \\
+        &= \frac1r + \mathcal O(r).
+    \end{align}
+    Therefore, we have
+    \begin{align}
+        b'' + Hb' &= b''(0) + \left( \frac1r + \mathcal O(r) \right) (b''(0) r + \mathcal O(r^3)) \\
+        &= 2b''(0) + \mathcal O(r^2). \label{eq:bbyahu1}
+    \end{align}
+    On the other hand, by Eq.~\eqref{eq:gpt1}, we can derive the following relations
+    \begin{align}
+        b'' + Hb' = \frac{1 + (b')^2}{b} + b &= \frac{1 + \mathcal O(r^2)}{b_0 + \mathcal O(r^2)} + b_0 + \mathcal O(r^2) \\
+        &= b_0 + \frac1{b_0} + \mathcal O(r^2). \label{eq:bbyahu2}
+    \end{align}
+    Therefore, $2b''(0) = b_0 + b_0^{-1}$. It follows that
+    \begin{gather*}
+        Y'' = 2[bb'' + (b')^2] = 2b_0 b''(0) + \mathcal O(r^2) \\
+        \implies Y''(0) = 2b_0 b''(0) = b_0 (b_0 + b_0^{-1}) = b_0^2 + 1 = Y(0)
+    \end{gather*}
+    and $P''(0) = -2f_0 = \lambda^2$. Also,
+    \begin{gather*}
+        Y' = 2bb' = 2b_0(b''(0)r + \mathcal O(r^3)) \implies Y'(0) = 0, \\
+        P' = -2(f_0 r + \mathcal O(r^3)) \implies P'(0) = 0.
+    \end{gather*}
+    Therefore,
+    \begin{equation}
+        Q'(0) = \frac{Y'(0) P(0) - Y(0) P'(0)}{[P(0)]^2} = 0
+    \end{equation}
+    and
+    \begin{gather}
+        2PP'Q' + P^2 Q'' = (P^2 Q')' = Y''P - YP'' = (Y'P - YP')' \\
+        \implies Q''(0) = \frac{Y''(0) P(0) - Y(0) P''(0)}{[P(0)]^2} = \frac{(b_0^2 + 1)[(\lambda^2 - 4c) - \lambda^2]}{(\lambda^2 - 4c)^2} = -\frac{(b_0^2 + 1)(4c)}{(\lambda^2 - 4c)^2} < 0.
+    \end{gather}
+    Hence, $Q' < 0$ for small positive $r$.
+\end{proof}
+
+With Lem.~\ref{lem:monotone-q}, we can prove Thm.~\ref{thm:main-ricci} more easily.
+
+\begin{proof}[Proof of Thm.~\ref{thm:main-ricci}]
+    Lem.~6.10 \cite{Rajan} implies
+    \begin{equation}
+        f'(r) = -r + \mathcal O(1) \implies f(r) = -\tfrac12 r^2 + \mathcal O(r),
+    \end{equation}
+    and Lem.~6.13 implies that $\lim_{r \to \infty} b(r) / r = \beta$. Recall Eqs.~\eqref{eq:qp}--\eqref{eq:qy}. We have
+    \begin{gather}
+        P = \lambda^2 - 4c - 2 (-\tfrac12 r^2 + \mathcal O(r)) = r^2 + \mathcal O(r) \implies P/r^2 \to 1, \\
+        Y/r^2 = (b/r)^2 + 1/r^2 \to \beta^2,
+    \end{gather}
+    as $r \to \infty$. Therefore,
+    \begin{equation}
+        0 < \beta^2 = \lim_{r \to \infty} \frac{Y/r^2}{P/r^2} = \lim_{r \to \infty} \frac YP = \lim_{r \to \infty} Q(r) \le Q(0) = \frac{1 + b_0^2}{\lambda^2 - 4c},
+    \end{equation}
+    where $Q$ is defined as in Lem.~\ref{lem:monotone-q} the inequality is given by the lemma. We are done.
+\end{proof}
+
+\printbibliography
+
+\end{document}

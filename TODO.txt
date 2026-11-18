@@ -1,0 +1,3 @@
+- f0_infty ==> b'_infty < 1 /sqrt(3)
+
+- 

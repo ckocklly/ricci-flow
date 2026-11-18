@@ -1,1 +1,15 @@
 **.DS_Store
+.gitignore
+.vscode
+**/*.asy
+**/*.aux
+**/*.bbl
+**/*-blx.bib
+**/*.bcf
+**/*.blg
+**/*.fdb_latexmk
+**/*.fls
+**/*.log
+**/*.out
+**/*.synctex.gz
+**/*.xml

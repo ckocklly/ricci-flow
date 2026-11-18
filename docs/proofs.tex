@@ -1,0 +1,139 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage{rf}
+
+\begin{document}
+
+\title{Proofs}
+\author{Leo Lee}
+\date{\today}
+
+\maketitle
+
+\section{Introduction}
+
+This section shows why we can approximate functions as Taylor polynomials while retaining some extent of stability.
+
+To seek for $[SO(3) \times SO(2)]$-invariant Ricci solitons given by $(M, g)$ and function $M \to \R$, where $M$ is $\R^3 \times S^1$ or $\R^2 \times S^2$, we shall study the solutions of the following ODE system:
+\begin{gather}
+    f'' = \frac{a''}{a} + 2 \frac{b''}{b} - 1, \\
+    a'' = -2\frac{a'b'}{b} + a'f' + a, \\
+    b'' = \frac{1 - (b')^2}{b} - \frac{a'b'}{a} + b'f' + b.
+\end{gather}
+for functions
+\[ a: [0, \infty) \to [0, \infty), \quad b: [0, \infty) \to [0, \infty), \quad f: [0, \infty) \to \R. \]
+
+\section{Rigorous Taylor Remainder Bounds via Majorants}
+
+\subsection{Power-Series Recurrence}
+
+Let
+\[
+a(r)=\sum_{k=0}^{\infty}a_k r^k,\qquad
+b(r)=\sum_{k=0}^{\infty}b_k r^k,\qquad
+f(r)=\sum_{k=0}^{\infty}f_k r^k
+\]
+be formal power-series solutions of the given ODE system.
+Substitution into the denominator-cleared equations and
+collection of coefficients of equal powers of \(r\) yield
+recurrence relations of the form
+\[
+A_k
+\begin{pmatrix}
+a_{k+2}\\
+b_{k+2}\\
+f_{k+2}
+\end{pmatrix}
+=
+F_k(a_0,\ldots,a_{k+1},
+    b_0,\ldots,b_{k+1},
+    f_0,\ldots,f_{k+1}),
+\]
+where \(A_k\) is the coefficient matrix of the highest-order
+unknowns and \(F_k\) contains the remaining terms.
+
+The recurrence is well-defined whenever \(A_k\) is invertible.
+Its precise form, including all contributions to \(A_k\), must
+be obtained by coefficient extraction from the original ODEs.
+
+\subsection{Majorant Theorem}
+
+Suppose that the initial coefficients and the recurrence
+relations satisfy the following conditions for constants
+\(K>0\) and \(C>0\):
+
+\begin{enumerate}
+    \item The base coefficients satisfy
+    \[
+    |a_j|,\ |b_j|,\ |f_j|\le KC^j
+    \]
+    for every index \(j\) required to initialize the induction.
+
+    \item For every \(k\ge 0\), whenever
+    \[
+    |a_j|,\ |b_j|,\ |f_j|\le KC^j,
+    \qquad 0\le j\le k+1,
+    \]
+    the recurrence implies
+    \[
+    |a_{k+2}|,\ |b_{k+2}|,\ |f_{k+2}|
+    \le KC^{k+2}.
+    \]
+\end{enumerate}
+
+Then, by strong induction,
+\[
+\boxed{
+|a_k|,\ |b_k|,\ |f_k|\le KC^k
+\quad\text{for every }k\ge0.
+}
+\]
+
+\begin{proof}
+The base case holds by assumption. Suppose the bounds hold
+for all indices up to \(k+1\). By the second hypothesis,
+the recurrence relations imply the bounds at index \(k+2\).
+Thus the bounds hold at every index by strong induction.
+\end{proof}
+
+\subsection{Geometric Majorant and Taylor Remainder}
+
+Define
+\[
+M(r)=\sum_{k=0}^{\infty}KC^k r^k
+=\frac{K}{1-Cr},\qquad |r|<\frac1C.
+\]
+The coefficient bounds imply absolute convergence of all
+three power series for \(|r|<1/C\).
+
+Let
+\[
+P_{a,10}(r)=\sum_{k=0}^{10}a_k r^k
+\]
+denote the tenth-order Taylor polynomial of \(a\), and
+define \(P_{b,10}\) and \(P_{f,10}\) analogously. For
+\(0\le\epsilon<1/C\),
+\begin{align*}
+|a(\epsilon)-P_{a,10}(\epsilon)|
+&\le \sum_{k=11}^{\infty}|a_k|\epsilon^k\\
+&\le K\sum_{k=11}^{\infty}(C\epsilon)^k\\
+&=\frac{K(C\epsilon)^{11}}{1-C\epsilon}.
+\end{align*}
+The same argument applies to \(b\) and \(f\). Consequently,
+\[
+\boxed{
+\begin{aligned}
+|R_{a,10}(\epsilon)|&\le
+\frac{K(C\epsilon)^{11}}{1-C\epsilon},\\
+|R_{b,10}(\epsilon)|&\le
+\frac{K(C\epsilon)^{11}}{1-C\epsilon},\\
+|R_{f,10}(\epsilon)|&\le
+\frac{K(C\epsilon)^{11}}{1-C\epsilon}.
+\end{aligned}
+}
+\]
+These estimates are rigorous provided the majorant hypotheses
+have been verified for the actual recurrence and initial data.
+
+% Inductive step needs more explanation: 
+
+\end{document}

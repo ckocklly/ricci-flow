@@ -1,0 +1,170 @@
+%%%%%%%%%%%%%%%%%%%%%%%%
+%%  IMAGE
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{graphicx}
+\graphicspath{ {pics/} }
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%%  PACKAGES
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{
+  amsfonts,
+  amsmath,
+  amsthm,         % theorems etc.
+  amssymb,
+  array,
+  asymptote, 
+  bm,             % Greek boldface
+  caption,        % for figures, tables, etc.
+  enumitem,       % enumerate & itemize
+  esint,          % oiint etc.
+  float,
+  lipsum,         % dummy text
+  mathtools, 
+  sectsty,        % title styles
+  setspace,       % typesetting
+  stmaryrd,       % special symbols
+  subcaption,
+  titlesec,       % typesetting for (sub)sections
+  wrapfig
+}
+\usepackage[
+  colorlinks=true,
+  citecolor=blue,
+  linkcolor=magenta
+]{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[most]{tcolorbox}
+\usepackage[dvipsnames]{xcolor}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%%  STRUCTURE
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\tbox}[1]{{\setlength{\fboxsep}{1.5pt} \fbox{\ensuremath{#1}}}}
+  % tighter boxed env
+% amsthm
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newcommand{\noqed}{\renewcommand{\qedsymbol}{}}  % no square in env "proof"
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%%  CUSTOM CMD
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Common functions
+\DeclareMathOperator*{\lcm}{lcm}
+\DeclareMathOperator{\dom}{dom}
+\let\Im\relax
+\let\Re\relax
+\DeclareMathOperator{\Im}{Im}
+\DeclareMathOperator{\Re}{Re}
+\DeclareMathOperator{\sign}{sign}
+\DeclareMathOperator{\cis}{cis}
+\DeclareMathOperator{\tr}{Tr}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator*{\argmin}{arg min}
+\DeclareMathOperator*{\argmax}{arg max}
+
+% Common notations
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\contradiction}{\Rightarrow\!\Leftarrow}
+\renewcommand{\Vec}[1]{\overrightarrow{#1}}
+\newcommand{\abs}[1]{\left\lvert #1 \right\rvert}
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+
+% Project specific
+\newcommand{\SO}{\operatorname{SO}}
+\newcommand{\SU}{\operatorname{SU}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%%  TYPESETTING
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[letterpaper, margin=.9in]{geometry}  % paper size & margin
+\setstretch{1.15}  % line height
+\setlength{\parindent}{0pt}       % paragraph indentation
+\setlength{\parskip}{0pt}         % space btwn paragraphs
+\renewcommand{\arraystretch}{1}   % row height for tables, matrices, etc.
+\allsectionsfont{\sffamily}
+
+\renewenvironment{center}
+  {\vspace{-5pt}\begin{trivlist}\centering\item[]}
+  {\end{trivlist}\vspace{-5pt}}
+  % reduces the vertical paddings of env "center"
+\newcommand{\newpar}{\vspace{6pt}}
+% mathmode
+\allowdisplaybreaks
+\setlength{\abovedisplayskip}{4pt plus 2pt minus 2pt}
+\setlength{\belowdisplayskip}{4pt plus 2pt minus 2pt}
+\setlength{\abovedisplayshortskip}{0pt plus 3pt}
+\setlength{\belowdisplayshortskip}{4pt plus 2pt minus 2pt}
+\setlength{\jot}{4pt plus 2pt minus 2pt}
+% float
+\setlength{\floatsep}{9pt plus 2pt minus 2pt}
+\setlength{\intextsep}{\the\floatsep}
+\setlength{\textfloatsep}{\the\floatsep}
+\captionsetup{font=small}
+\captionsetup[figure]{aboveskip=5pt, belowskip=0pt}
+\captionsetup[table]{aboveskip=5pt, belowskip=0pt}
+% enumitem
+\setlist[enumerate]{topsep=0pt, partopsep=0pt, parsep=0pt, label=(\alph*), itemsep=10pt, leftmargin=1.8em}
+\setlist[itemize]{topsep=5pt, partopsep=0pt, parsep=0pt, itemsep=5pt, leftmargin=1.8em}
+
+\renewcommand{\emph}[1]{\textbf{\textit{\textcolor{Blue}{#1}}}}
+\tcbset{
+  every box/.style={
+    colback=gray!5,
+    colframe=black,
+    arc=2mm,
+  }
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%%  BIBLIOGRAPHY
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[
+  backend=biber,
+  sorting=none,
+  citestyle=numeric-comp,
+  giveninits=true,
+  doi=false,
+  isbn=false,
+  url=false,
+  maxbibnames=6
+]{biblatex}
+\renewbibmacro{in:}{}
+\AtEveryBibitem{
+  \clearfield{eprint}
+  \clearfield{eprinttype}
+  \clearfield{eprintclass}}
+\DeclareFieldFormat{labelalpha}{\textbf{\small #1}} % citation ID's in small-bold
+\DefineBibliographyStrings{english}{%
+  backrefpage  = {cited p.}, % for single page number
+  backrefpages = {cited pp.} % for multiple page numbers
+}
+\DeclareFieldFormat{journaltitle}{\textit{#1},} % italic journal title with comma
+\DeclareFieldFormat[inbook,thesis]{title}{\textit{#1}\addperiod} % italic title with period
+\DeclareFieldFormat[article]{title}{#1} % title of journal article is printed as normal text
+\DeclareFieldFormat[article]{volume}{\textbf{#1}\addcolon\space} % bold volume numbers
+% Separate ISBN-13 field
+\DeclareFieldFormat[misc]{title}{\textit{#1}\addperiod}
+\DeclareSourcemap{\maps[datatype=bibtex]{\map{\step[fieldsource=ISBN-13,fieldtarget=ISBN]}}}
+% Drop trailing punctuation in bibliography names
+% \renewcommand{\finentrypunct}{}

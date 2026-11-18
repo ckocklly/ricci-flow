@@ -1,0 +1,354 @@
+\documentclass[landscape]{sciposter}
+\renewcommand{\papertype}{custom}
+\renewcommand{\sectionsize}{\large}
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%% CORE
+%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{graphicx}
+%\usepackage[latin1]{inputenc}
+\usepackage{tikz}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{bm}
+\usepackage{multicol}
+\usepackage{listings}
+\usepackage{enumerate, wrapfig}
+\usepackage{colortbl}
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%% FONT
+%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{fontspec}
+\usepackage{unicode-math}
+% \setmainfont{Helvetica Neue}
+% \setsansfont{Helvetica Neue}
+% \setmathfont{Latin Modern Math}
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+% LAYOUT
+%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{setspace}
+\renewcommand{\papertype}{custom}
+\renewcommand{\fontpointsize}{25pt}
+%\setlength{\paperwidth}{36 in}
+%\setlength{\paperheight}{24 in}
+\renewcommand{\setpspagesize}%
+    {\ifthenelse{\equal{\orientation}{landscape}}%
+        {\special{papersize=36in,24in}}%
+        {\special{papersize=24in,36in}}}
+\setstretch{1.15}  % line height
+\setlength{\parindent}{0pt}       % paragraph indentation
+\setlength{\parskip}{0pt}         % space btwn paragraphs
+\renewcommand{\arraystretch}{1.4}   % row height for tables, matrices, etc.
+% mathmode
+\allowdisplaybreaks
+\setlength{\abovedisplayskip}{20pt plus 8pt minus 4pt}
+\setlength{\belowdisplayskip}{20pt plus 8pt minus 4pt}
+\setlength{\abovedisplayshortskip}{12pt plus 6pt}
+\setlength{\belowdisplayshortskip}{12pt plus 6pt}
+\setlength{\jot}{16pt}
+
+%\renewcommand{\subsectionsize}{\large \textcolor{\SectionCol}}
+%\usepackage[spanish]{babel}
+% or whatever
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%%  CUSTOM CMD
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Common functions
+\DeclareMathOperator*{\lcm}{lcm}
+\DeclareMathOperator{\dom}{dom}
+\let\Im\relax
+\let\Re\relax
+\DeclareMathOperator{\Im}{Im}
+\DeclareMathOperator{\Re}{Re}
+\DeclareMathOperator{\sign}{sign}
+\DeclareMathOperator{\cis}{cis}
+\DeclareMathOperator{\tr}{Tr}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator*{\argmin}{arg min}
+\DeclareMathOperator*{\argmax}{arg max}
+
+% Common notations
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\contradiction}{\Rightarrow\!\Leftarrow}
+\renewcommand{\Vec}[1]{\overrightarrow{#1}}
+\newcommand{\abs}[1]{\left\lvert #1 \right\rvert}
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+
+% Project specific
+\newcommand{\SO}{\operatorname{SO}}
+\newcommand{\SU}{\operatorname{SU}}
+
+
+\newtheorem{thm}{Theorem}%[section] % uncomment [section] to number within section
+\newtheorem*{thm*}{Theorem}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{cond}[thm]{Condition}
+\newtheorem*{namedtheorem}{Theorem}
+\newtheorem{ex}{Example}
+\newtheorem*{definition}{Definition}
+\newtheorem{env}[thm]{Variation}
+\renewcommand{\theequation}{\arabic{section}.\arabic{equation}}
+
+\usepackage[framemethod=TikZ]{mdframed}
+
+\mdfdefinestyle{MyFrame}{
+    linecolor=orange,
+    outerlinewidth=2pt,
+    roundcorner=20pt,
+    innertopmargin=20pt,
+    innerbottommargin=20pt,
+    innerrightmargin=20pt,
+    innerleftmargin=20pt,
+    backgroundcolor=white
+}
+
+\mdtheorem[style=MyFrame]{MDtheorem}{Theorem}
+\newenvironment{boxthm}[1][]{%
+\refstepcounter{thm}%
+    \ifstrempty{#1}%
+        {\begin{MDtheorem}}%
+        {\begin{MDtheorem}[(#1)]}%
+}{\end{MDtheorem}}
+
+% \definecolor{BoxCol}{rgb}{0.9,0.9,0.9}
+% uncomment for grey background to \section boxes
+% for use with default option boxedsections
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%%  COLORS
+%%%%%%%%%%%%%%%%%%%%%%%%
+\definecolor{BoxCol}{rgb}{.06,.16,.28}
+\definecolor{SectionCol}{rgb}{1,1,1}
+\definecolor{blue}{rgb}{0,0,1}
+\definecolor{orange}{rgb}{.93,.29,0.1}
+\definecolor{white}{rgb}{1,1,1}
+\newtheorem{Features}{Features}
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%%  BIBLIOGRAPHY
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[
+  backend=biber,
+  sorting=none,
+  citestyle=numeric-comp,
+  giveninits=true,
+  doi=false,
+  isbn=false,
+  url=false,
+  maxbibnames=6
+]{biblatex}
+\addbibresource{references.bib}
+\renewbibmacro{in:}{}
+\AtEveryBibitem{
+  \clearfield{eprint}
+  \clearfield{eprinttype}
+  \clearfield{eprintclass}}
+\DeclareFieldFormat{labelalpha}{\textbf{\small #1}} % citation ID's in small-bold
+\DefineBibliographyStrings{english}{%
+  backrefpage  = {cited p.}, % for single page number
+  backrefpages = {cited pp.} % for multiple page numbers
+}
+\DeclareFieldFormat{journaltitle}{\textit{#1},} % italic journal title with comma
+\DeclareFieldFormat[inbook,thesis]{title}{\textit{#1}\addperiod} % italic title with period
+\DeclareFieldFormat[article]{title}{#1} % title of journal article is printed as normal text
+\DeclareFieldFormat[article]{volume}{\textbf{#1}\addcolon\space} % bold volume numbers
+% Separate ISBN-13 field
+\DeclareFieldFormat[misc]{title}{\textit{#1}\addperiod}
+\DeclareSourcemap{\maps[datatype=bibtex]{\map{\step[fieldsource=ISBN-13,fieldtarget=ISBN]}}}
+% Drop trailing punctuation in bibliography names
+% \renewcommand{\finentrypunct}{}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%%  BODY
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{Symmetric Fixed Points of the Ricci Flow}
+\author{Noah Kang, Leo Lee, Anthony D'Arienzo, Eric Chen}
+%\institute{Illinois Mathematics Lab, University of Illinois at Urbana-Champaign}
+%\email{}  shows author email address below institute
+%\date is unused by the current \maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%
+% Logo for Poster
+%%%%%%%%%%%%%%%%%%%%%
+
+\leftlogo[.7]{IML_logo_1.png} % defines logo to left of title (with scale factor)
+\rightlogo[.6]{imark.png} % same but on right
+
+%%%%%%%%%%%%%%%%%%%
+% Start of document
+%%%%%%%%%%%%%%%%%%%
+\begin{document}
+%%%%%%%%%%%%%%%%%%%%%%
+%% Poster Set up
+%%%%%%%%%%%%%%%%%%%%%%%
+\conference{IML Poster Session Spring 2025}% you can change this for other conferences
+
+\maketitle
+\vspace{-3ex}
+\begin{multicols}{3}  % sets up 3 column poster
+
+
+%%%%%%%%%%%%%%%%%%%%%%
+%% Start of First Column
+%%%%%%%%%%%%%%%%%%%%%%%
+%Sections have a color box around them. Remove the * if you want to number your sections
+\section{Introduction}
+
+- What are Manifolds, Riemannian metrics
+
+- What is a Ricci flow
+
+- Our goal of the project: Observe the asymptotic behaviors of Ricci solitons.
+
+To find $(\SO(3) \times \SO(2))$-invariant Ricci solitons given by $(M, g)$ and a function $f: (\R^2 \times S^2) \to \R$, we will study the following ODE system \cite[Eqs.~(2.1)--(2.3)]{Rajan}
+\begin{align}
+    f'' &= \frac{a''}{a} + 2 \frac{b''}{b} - 1, \label{eq:rajan21} \\
+    a'' &= -2 \frac{a'b'}{b} + a'f' + a, \label{eq:rajan22} \\
+    b'' &= \frac{1 - (b')^2}{b} - \frac{a'b'}{a} + b'f' + b. \label{eq:rajan23}
+\end{align}
+for functions $a,b,f: [0, \infty) \to \R$ subject to initial conditions \cite[Lem.~2.1]{Rajan}
+\[
+    a(0) = 0,\ \ a'(0) = 1,\ \ b(0) = b_0 > 0,\ \ b'(0) = 0,\ \ f(0) = f'(0) = 0
+\]
+and $f''(0) = f_0 < 0$ to make use of Lem.~4.2 \cite{Rajan}. By Thm.~5.1, there exists unique solutions $a,b,f$. Let
+\begin{align*}
+    \alpha &\coloneq \lim_{r \to \infty} a'(r), \\
+    \beta &\coloneq \lim_{r \to \infty} b'(r).
+\end{align*}
+Lems.~6.12--6.13 imply that the limits converge and $\alpha, \beta > 0$. We are interested in bounding $\beta$ as it determines the scalar curvature of the Ricci flow.
+
+\section{Section title}
+
+Here you can begin introducing some of the initial problems your work encountered, or any previous work motivating your project.
+
+
+%the boxthm environment automatically puts a box around your theorem
+\begin{mdframed}[style=MyFrame]
+    \begin{thm}
+    This didn't have to be a theorem, but could instead refer to a conjecture you've made, or a previous relevant theorem in this area. In lines 66, you can change "Theorem" to "Conjecture" or some other title, that will be used for all statements written in boxthm
+
+    If this is a result proven by someone else it's important to cite them in the statement of it.
+    \end{thm}
+\end{mdframed}
+
+\columnbreak
+
+%%%%%%%%%%%%%%%%%%%%%%
+%% New Column
+%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{multicols}{2}%this is one way to put text and images side by side
+\begin{ex}[A first example]
+Write things here.
+\end{ex}
+\begin{figure}
+\includegraphics[height=2.25in]{bamboozledagain.jpg}
+ %\caption{Caption goes here}
+
+ This text is under the image as well
+\end{figure}
+\end{multicols}
+
+{\small You can write small text to elaborate on your example if needed. Or wherever else small text might be useful.}
+
+
+ \begin{minipage}{.5\columnwidth}%this is another way to put text and images side by side
+\begin{ex}[Here's a second example]
+Here's where you could write about it.
+\end{ex}
+\end{minipage}
+\hspace{7ex}\begin{minipage}{.37\linewidth}
+\begin{center}\begin{figure}
+\includegraphics[height=2.25in]{bamboozledagain.jpg}
+ 	\caption{Caption goes here}
+
+\end{figure}\end{center}
+\end{minipage}
+
+\section*{Methods and/or Results}
+\subsection*{Name of method/Example:} Here is where you might talk about the methods used in your research, and what obstacles that may have arisen.
+
+\begin{thm}
+This is a theorem without a box around it, but the same numbering at boxthm.
+You don't need to itemize here, it's just used as an example.
+\begin{itemize}
+    \item First Item
+   \item Second Item
+   \item Third Item
+\end{itemize}
+\end{thm}
+
+
+\subsection*{Subsection of your Methods/Results}
+
+
+\begin{minipage}{.65\columnwidth}
+  The image file used throughout this poster is called `bamboozledagain.jpg', and must be swapped out for whatever image you choose to use. In order for the image to appear, the image file should be stored in the same folder as your .tex file. Experiment with the relative sizing and placement of images to change up this poster layout.\end{minipage}\hspace{2ex}\begin{minipage}{.3\linewidth}
+
+\begin{center}\vspace{-2ex}\includegraphics[height=2.5in]{bamboozledagain.jpg}\end{center}\end{minipage}
+
+
+ \begin{mdframed}[style=MyFrame]
+% by putting the minipage inside the mdframe, you get a box around the text and image
+ \begin{minipage}{.625\columnwidth}
+ \begin{thm*}
+The use of thm* gives an unnumbered theorem. Look at the difference between line 35 and 36 to see how to do this for conjectures, corollaries, ect.
+ \end{thm*}
+\end{minipage}\hspace{1ex}\begin{minipage}{.3\columnwidth}
+
+\begin{center}\includegraphics[height=3in]{bamboozledagain.jpg}\end{center}\end{minipage}\end{mdframed}
+
+\columnbreak
+
+%%%%%%%%%%%%%%%%%%%%%%
+%% New Column
+%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Future Directions }
+
+Here is where you can talk about the results of your work going forward
+
+\subsection{Another Subsection}
+"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris."
+
+\begin{boxthm}
+"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+ %\end{theorem}
+ \end{boxthm}
+
+ {\bf {\large Now how might you use this template?}}\vspace{.5ex}
+Just because the poster is laid out this way doesn't mean you need to follow its structure down to the spacing: \vspace{1ex}
+
+{\bf Question 1} Experiment! Move the text boxes around, add more or larger pictures. Feel free to change this template up as you make your poster. \vspace{1ex}
+
+{\bf Question 2} Don't know how to do something? Search for it on the internet! A quick search with the right keywords will quickly reveal answers for people who had similar questions.  \vspace{1ex}
+
+{\bf Answering Question 1}. Look at other posters and decide what you liked about them. Walking around the Lab there are plenty of examples of previous IML posters.
+
+{\bf Answering Question 2}. If you're editing this and something goes wrong don't be afraid to click ctrl+z. We all make mistakes, and that's what it's there for.
+
+\printbibliography
+
+\end{multicols}
+
+
+%%%%%%  Here is where the acknowledgements go. If you are in a project which requires additional acknowledgements, add them here
+\vfill
+ {}\centerline{\emph{
+Support for this project was provided by the Illinois Mathematics Lab and the Department of Mathematics at the University of Illinois Urbana-Champaign.}}
+\end{document}
+
+
