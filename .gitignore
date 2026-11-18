@@ -11,5 +11,6 @@
 **/*.fls
 **/*.log
 **/*.out
+**/*.pre
 **/*.synctex.gz
 **/*.xml
